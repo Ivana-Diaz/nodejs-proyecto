@@ -1,8 +1,8 @@
-const api = "https://fakestoreapi.com/products";
+const api = "https://fakestoreapi.com/";
 
-export const getProducts = async () => {
+export const getProducts = async (url) => {
   try {
-    const response = await fetch(api);
+    const response = await fetch(api + url);
 
     if (response.ok) {
       const data = await response.json();
@@ -14,28 +14,10 @@ export const getProducts = async () => {
   }
 }
 
-export const getProductById = async (id) => {
+export const addProduct = async (url, product) => {
   try {
 
-    if (!parseInt(id))
-      throw new Error("El ID debe ser un número");
-
-    const response = await fetch(api + "/" + id);
-
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    }
-
-  } catch (error) {
-    console.log(`Se produjo un error: ${error.message}`);
-  }
-}
-
-export const addProduct = async (product) => {
-  try {
-
-    const response = await fetch(api, {
+    const response = await fetch(api + url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(product)
@@ -51,13 +33,10 @@ export const addProduct = async (product) => {
   }
 }
 
-export const deleteProduct = async (id) => {
+export const deleteProduct = async (url) => {
   try {
 
-    if (!parseInt(id))
-      throw new Error("El ID debe ser un número");
-
-    const response = await fetch(api + "/" + id, {
+    const response = await fetch(api + url, {
       method: "DELETE"
     });
 
@@ -69,4 +48,18 @@ export const deleteProduct = async (id) => {
   } catch (error) {
     console.log(`Se produjo un error: ${error.message}`);
   }
+}
+
+// Validaciones para que el index quede más limpio y no repetir tanto código
+
+export const validId = (arg) => {
+  return /\/\d/.test(arg);
+}
+
+export const urlProd = (arg) => {
+  return arg === "products";
+}
+
+export const urlProdId = (arg) => {
+  return arg.startsWith("products/");
 }
