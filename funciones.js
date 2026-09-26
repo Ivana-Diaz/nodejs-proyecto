@@ -51,13 +51,9 @@ export const deleteProduct = async (url) => {
 // Validaciones para que el index quede más limpio y no repetir tanto código
 
 export const validId = (arg) => {
-  return arg && /\/\d/.test(arg);
+  return arg && arg.startsWith("products/") && /\/\d/.test(arg);
 }
 
 export const urlProd = (arg) => {
   return arg && arg === "products";
-}
-
-export const urlProdId = (arg) => {
-  return arg && arg.startsWith("products/");
 }

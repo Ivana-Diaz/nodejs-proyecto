@@ -1,4 +1,4 @@
-import { getProducts, addProduct, deleteProduct, validId, urlProd, urlProdId } from "./funciones.js";
+import { getProducts, addProduct, deleteProduct, validId, urlProd } from "./funciones.js";
 
 console.log("==== Inicio del programa ====\n");
 
@@ -13,7 +13,7 @@ switch (metodo) {
       const products = await getProducts(url)
       if (products) console.log("Lista de productos:\n", products);
 
-    } else if (urlProdId(url) && validId(url)) {
+    } else if (validId(url)) {
 
       const product = await getProducts(url);
       if (product) console.log("Producto encontrado:\n", product);
@@ -34,7 +34,7 @@ switch (metodo) {
     break;
 
   case "DELETE":
-    if (urlProdId(url) && validId(url)) {
+    if (validId(url)) {
 
       const product = await deleteProduct(url);
       if (product) console.log("Producto eliminado:\n", product);
