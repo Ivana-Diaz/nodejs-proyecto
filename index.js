@@ -11,46 +11,37 @@ switch (metodo) {
   case "GET":
     if (urlProd(comando) && args.length == 2) {
 
-      console.log("Lista de productos:\n", await getProducts(comando));
+      const products = await getProducts(comando)
+      if (products) console.log("Lista de productos:\n", products);
 
     } else if (urlProdId(comando) && validId(comando)) {
 
       const product = await getProducts(comando);
-
-      if (product)
-        console.log("Producto encontrado:\n", product);
-      else
-        console.log("Producto no encontrado.");
+      if (product) console.log("Producto encontrado:\n", product);
 
     } else
       console.log(error);
-
     break;
 
   case "POST":
     if (urlProd(comando) && args.length == 5) {
 
       const product = { title: args[2], price: args[3], category: args[4] };
-      console.log("Producto agregado:\n", await addProduct(comando, product));
+      const productAdd = await addProduct(comando, product);
+      if (productAdd) console.log("Producto agregado:\n", productAdd);
 
     } else
-      console.log(error);
-    
+      console.log(error);   
     break;
 
   case "DELETE":
     if (urlProdId(comando) && validId(comando)) {
 
-      const product = await deleteProduct(args[1]);
-
-      if (product)
-        console.log("Producto eliminado:\n", product);
-      else
-        console.log(`Producto no encontrado.`);
+      const product = await deleteProduct(comando);
+      if (product) console.log("Producto eliminado:\n", product);
 
     } else
       console.log(error);
-    
     break;
 
   default:

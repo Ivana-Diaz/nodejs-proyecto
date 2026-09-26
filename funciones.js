@@ -10,13 +10,12 @@ export const getProducts = async (url) => {
     }
 
   } catch (error) {
-    console.log(`Se produjo un error: ${error.message}`);
+    console.log(`Error: ${error.message}`);
   }
 }
 
 export const addProduct = async (url, product) => {
   try {
-
     const response = await fetch(api + url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -29,37 +28,36 @@ export const addProduct = async (url, product) => {
     }
 
   } catch (error) {
-    console.log(`Se produjo un error: ${error.message}`);
+    console.log(`Error: ${error.message}`);
   }
 }
 
 export const deleteProduct = async (url) => {
   try {
-
     const response = await fetch(api + url, {
       method: "DELETE"
     });
 
-    if (response.ok){
+    if (response.ok) {
       const data = await response.json();
       return data;
     }
     
   } catch (error) {
-    console.log(`Se produjo un error: ${error.message}`);
+    console.log(`Error: ${error.message}`);
   }
 }
 
 // Validaciones para que el index quede más limpio y no repetir tanto código
 
 export const validId = (arg) => {
-  return /\/\d/.test(arg);
+  return arg && /\/\d/.test(arg);
 }
 
 export const urlProd = (arg) => {
-  return arg === "products";
+  return arg && arg === "products";
 }
 
 export const urlProdId = (arg) => {
-  return arg.startsWith("products/");
+  return arg && arg.startsWith("products/");
 }
