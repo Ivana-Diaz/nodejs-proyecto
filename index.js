@@ -3,20 +3,19 @@ import { getProducts, addProduct, deleteProduct, validId, urlProd, urlProdId } f
 console.log("==== Inicio del programa ====\n");
 
 const args = process.argv.slice(2);
-const metodo = args[0];
-const comando = args[1];
+const [ metodo, url ] = args;
 const error = "Comando incorrecto o incompleto.";
 
 switch (metodo) {
   case "GET":
-    if (urlProd(comando) && args.length == 2) {
+    if (urlProd(url) && args.length == 2) {
 
-      const products = await getProducts(comando)
+      const products = await getProducts(url)
       if (products) console.log("Lista de productos:\n", products);
 
-    } else if (urlProdId(comando) && validId(comando)) {
+    } else if (urlProdId(url) && validId(url)) {
 
-      const product = await getProducts(comando);
+      const product = await getProducts(url);
       if (product) console.log("Producto encontrado:\n", product);
 
     } else
@@ -24,10 +23,10 @@ switch (metodo) {
     break;
 
   case "POST":
-    if (urlProd(comando) && args.length == 5) {
+    if (urlProd(url) && args.length == 5) {
 
       const product = { title: args[2], price: args[3], category: args[4] };
-      const productAdd = await addProduct(comando, product);
+      const productAdd = await addProduct(url, product);
       if (productAdd) console.log("Producto agregado:\n", productAdd);
 
     } else
@@ -35,9 +34,9 @@ switch (metodo) {
     break;
 
   case "DELETE":
-    if (urlProdId(comando) && validId(comando)) {
+    if (urlProdId(url) && validId(url)) {
 
-      const product = await deleteProduct(comando);
+      const product = await deleteProduct(url);
       if (product) console.log("Producto eliminado:\n", product);
 
     } else
